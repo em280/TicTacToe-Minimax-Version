@@ -70,8 +70,9 @@ class TicTacToeGame(BoxLayout):
     computer = "X"
     currentPlayer = "O"
     squares = []
+    who = ""
     winningMoves = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
-                    [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [6, 4, 2], ]
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [6, 4, 2]]
 
     def __init__(self, **kwargs):
         super(TicTacToeGame, self).__init__(**kwargs)
@@ -185,10 +186,13 @@ class TicTacToeGame(BoxLayout):
         # Consider highlighting the winning combination depending on who won the game
         if game_winner == self.human:
             print("Human Won.")
+            self.who = "O Winnner!"
         elif game_winner == self.computer:
             print("Computer Won.")
+            self.who = "X Winner!"
         else:
             print("DRAW!")
+            self.who = "DRAW!"
 
         # Disable further placement of tokens on the board
         for index in range(9):
@@ -196,11 +200,15 @@ class TicTacToeGame(BoxLayout):
 
         self.game_over_settings()
 
+    def declare_winner(self):
+        return self.who
+
     def game_over_settings(self):
         """ Functionality for displaying useful information at the end of the game. """
         # create content and add to the popup
+        title = self.declare_winner()
         content = Button(text='REPLAY!')
-        popup = Popup(title='Match End',
+        popup = Popup(title=title,
                       content=content,
                       size_hint=(None, None), size=(350, 200), auto_dismiss=False)
 
@@ -231,29 +239,40 @@ class TicTacToeGame(BoxLayout):
 
     def minimax(self, board, player):
         """ The minimax function. """
-        b = board[:]
 
-        winner = self.check_winner(b)
+        # Making a copy of the board for use by the minimax function
+        boardCopy = board[:]
+
+        # Checking for terminal states
+        winner = self.check_winner(boardCopy)
         if winner == self.computer:
-            return {"value": 10, "position": -1}
+            return {"value": 1, "position": -1}
 
         if winner == self.human:
-            return {"value": -10, "position": -1}
+            return {"value": -1, "position": -1}
 
-        availableMoves = self.empty_squares(b)
+        # Find out if the game has ended for a terminal state of zero (0)
+        availableMoves = self.empty_squares(boardCopy)
         if len(availableMoves) < 1:
             return {"value": 0, "position": -1}
 
-        scores = []
-        for i in range(len(availableMoves)):
-            current = availableMoves[i]
-            b[current] = player
-            score = self.minimax(b, self.swap(player))
-            scores.append({"value": score["value"], "position": current})
-            b[current] = None
+        moves = []
+        for index in range(len(availableMoves)):
+            # Make a move into the next available position for the current player
+            currentMove = availableMoves[index]
+            boardCopy[currentMove] = player
 
+            # Make note of the score and keep a record of the move in the moves list for later evaluation.
+            score = self.minimax(boardCopy, self.swap(player))
+            moves.append({"value": score["value"], "position": currentMove})
+
+            # Reset the board to its original state
+            boardCopy[currentMove] = None
+
+        # Evaluate the scores of the possible valid moves collected from above
+        # and return the best move to be played by the computer.
         f = max if player == self.computer else min
-        return f(scores, key=lambda x: x["value"])
+        return f(moves, key=lambda x: x["value"])
 
 
 class TicTacToeApp(App):
