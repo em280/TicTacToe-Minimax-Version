@@ -23,10 +23,12 @@ $ kivy3 tic_tac_toe.py
 ```
 
 
+
 > NOTE: This application is still undergoing some essential editing
 > for better and improved user experience.
 > The file provided above has only been tested on a system running macOS
 > but should be able to run on both windows and linux machines as well.
+
 
 
 License
