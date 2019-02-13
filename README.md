@@ -14,7 +14,7 @@ $ pip3 install -r requirements.txt
 ```
 
 
-### running/executing the application
+### Running/Executing the application
 
 To run the the project you will need the followings to use the following commands provided you are already in the TicTacToe-Minimax-Version-master directory:
 
