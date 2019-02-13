@@ -6,7 +6,7 @@ This is an implementation of the classic game of Tic-Tac-Toe also known as Nough
 
 This project requires [Kivy](https://kivy.org/) v1.10.1+ and [Python](https://www.python.org/) v3.7.2+ to run. Pip also needs to be installed.
 
-Install the dependencies and devDependencies using the requirements.txt file.
+Install the dependencies and devDependencies using the `requirements.txt` file.
 
 ```sh
 $ cd TicTacToe-Minimax-Version-master
