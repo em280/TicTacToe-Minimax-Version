@@ -30,8 +30,3 @@ $ kivy3 tic_tac_toe.py
 > but should be able to run on both windows and linux systems as well.
 
 
-
-License
-----
-
-MIT
