@@ -19,7 +19,7 @@ $ pip3 install -r requirements.txt
 To run the the project you will need the followings to use the following commands provided you are already in the TicTacToe-Minimax-Version-master directory:
 
 ```sh
-$ kivy3 tic_tac_toe.py
+$ kivy3 tictactoe.py
 ```
 
 
